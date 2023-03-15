@@ -1,7 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Typewriter } from 'react-simple-typewriter';
 
 type Props = { message: Mess };
 
@@ -22,5 +21,4 @@ export default function Message({ message }: Props) {
       </div>
     </div>
   );
-  <div>{message.content}</div>;
 }
