@@ -1,40 +1,54 @@
 import { TextField } from '@mui/material';
 import React from 'react';
 
-type Props = {};
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 
-// Typing area for
-export default function Chatbox({}: Props) {
+type Props = {
+  queryString: string;
+  setQueryString: React.Dispatch<React.SetStateAction<string>>;
+  getQueryResponse: Function;
+};
+
+export default function Chatbox({
+  queryString,
+  setQueryString,
+  getQueryResponse,
+}: Props) {
+  function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setQueryString(e.target.value);
+  }
+
+  function handleEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.altKey === false && e.key === 'Enter') {
+      e.preventDefault();
+      getResponse();
+    }
+  }
+
+  function getResponse() {
+    // check query is not empty
+    if (queryString) {
+      getQueryResponse();
+    }
+  }
+
   return (
-    <div className='flex w-full m-3'>
-      <TextField
-        className='w-full border-black border-2'
-        variant='filled'
-        multiline
-        minRows={1}
-        maxRows={4}
+    <div className='flex w-full border-2 border-gray-400 rounded-lg text-white'>
+      <textarea
+        data-id='root'
+        placeholder='What do you want to know?'
+        rows={2}
+        className='w-full resize-none overflow-hidden bg-transparent h-[60px] p-3
+        text-white'
+        onChange={handleChange}
+        onKeyDown={handleEnter}
+        value={queryString as string}
       />
-      <div className='flex w-[5vw] bg-white items-center justify-center cursor-pointer'>
-        <svg
-          stroke='currentColor'
-          fill='none'
-          strokeWidth='2'
-          viewBox='0 0 24 24'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          className='h-6 w-6 p-1 rounded-lg hover:bg-gray-300'
-          height='1em'
-          width='1em'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <line
-            x1='22'
-            y1='2'
-            x2='11'
-            y2='13'
-          ></line>
-          <polygon points='22 2 15 22 11 13 2 9 22 2'></polygon>
-        </svg>
+      <div
+        className='flex w-[5vw] items-center justify-center border-l-2 cursor-pointer hover:bg-gray-200 hover:opacity-50'
+        onClick={getResponse}
+      >
+        <SendOutlinedIcon className='text-black' />
       </div>
     </div>
   );
