@@ -24,8 +24,10 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.5",
+    "react-media-recorder": "^1.6.6",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "vmsg": "^0.4.0"
   },
   "devDependencies": {
     "@types/prismjs": "^1.26.0",

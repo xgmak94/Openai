@@ -1,14 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import ReactMarkdown from 'react-markdown';
 import Message from './Message';
+import {type message } from '../../models/messages';
 
 type Props = {
-  messages: Mess[];
-};
-
-type Mess = {
-  role: string;
-  content: string;
+  messages: message[];
 };
 
 // Store questions and responses
@@ -23,7 +18,7 @@ export default function Querys({ messages }: Props) {
 
   return (
     <div
-      className='flex flex-col max-w-screen min-h-[90vh] max-h-[90vh] overflow-y-auto scrollbar-hide'
+      className='flex flex-col max-w-screen min-h-[80vh] max-h-[80vh] overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-gray-400'
       ref={messagesRef}
     >
       {messages.map((mess) => (
