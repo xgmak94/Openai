@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
+import Markdown from './Markdown';
 import { type message } from '../../models/messages';
 
 type Props = { message: message };
@@ -9,7 +9,7 @@ type Props = { message: message };
 export default function Message({ message }: Props) {
   return (
     <div
-      className={`flex w-screen p-3 ${
+      className={`flex max-w-screen p-2 gap-2 ${
         message.role === 'user' ? 'bg-[#343541]' : 'bg-[#444654]'
       }`}
     >
@@ -20,8 +20,8 @@ export default function Message({ message }: Props) {
         width={50}
         height={50}
       />
-      <div className='p-3'>
-        <ReactMarkdown children={message.content} />
+      <div className='flex flex-col'>
+        <Markdown message={message} />
       </div>
     </div>
   );

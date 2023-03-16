@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
-import { role, type message } from '../../models/messages';
+import { role, message } from '../../models/messages';
 
 type Props = {
-  messages: message[];
   setMessages: React.Dispatch<React.SetStateAction<message[]>>;
 };
 
-export default function Chatbox({ messages, setMessages }: Props) {
+export default function Chatbox({ setMessages }: Props) {
   const [queryString, setQueryString] = useState<string>(''); // current query
 
-  function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  // Sets the query string when user is typing
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQueryString(e.target.value);
-  }
+  };
 
-  function handleEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  // Handles when the user presses enter inside of the chatbox
+  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.altKey === false && e.key === 'Enter') {
       e.preventDefault();
-      getResponse();
+      addQuery();
     }
-  }
+  };
 
-  function getResponse() {
+  const addQuery = () => {
     // check query is not empty
     if (queryString) {
       setMessages((prev) => {
@@ -35,7 +36,7 @@ export default function Chatbox({ messages, setMessages }: Props) {
 
       setQueryString('');
     }
-  }
+  };
 
   return (
     <div className='flex w-full h-[10vh] mb-4 border-2 border-gray-400 rounded-lg text-white'>
@@ -51,7 +52,7 @@ export default function Chatbox({ messages, setMessages }: Props) {
       />
       <div
         className='flex w-[5vw] items-center justify-center border-l-2 cursor-pointer hover:bg-gray-200 hover:opacity-50'
-        onClick={getResponse}
+        onClick={addQuery}
       >
         <SendOutlinedIcon className='text-black' />
       </div>

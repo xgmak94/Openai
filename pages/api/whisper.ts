@@ -6,21 +6,26 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
-const model = 'gpt-3.5-turbo';
+const model = 'whisper-1';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const { messages } = req.body; // complete chat history
+    console.log(req.body);
+    const { file } = req.body; // complete chat history
 
-    const chatGPT = await openai.createChatCompletion({
-      model,
-      messages,
-    });
+    const whisper = await openai.createTranscription(file, model);
 
-    const chatGPTMessage = chatGPT.data.choices[0].message;
-    res.status(200).json(chatGPTMessage);
+    res.status(200).json(req.body);
   }
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
