@@ -1,6 +1,7 @@
 export interface message {
   role: role;
   content: string;
+  ai: string;
 }
 
 export enum role {

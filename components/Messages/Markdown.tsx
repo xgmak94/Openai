@@ -21,7 +21,6 @@ export default function Markdown({ message }: Props) {
                 style={AtomDark}
                 language={match[1]}
                 showLineNumbers={true}
-                wrapLongLines={true}
                 {...props}
               />
             ) : (

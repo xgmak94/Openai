@@ -8,6 +8,8 @@ type Props = {
 
 export default function Chatbox({ setMessages }: Props) {
   const [queryString, setQueryString] = useState<string>(''); // current query
+  const [option, setOption] = useState<string>('ChatGPT'); // selected option
+  const options = ['ChatGPT', 'DALL·E'];
 
   // Sets the query string when user is typing
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -26,10 +28,11 @@ export default function Chatbox({ setMessages }: Props) {
     // check query is not empty
     if (queryString) {
       setMessages((prev) => {
-        let arr = [...prev];
+        let arr: message[] = [...prev];
         arr.push({
           role: role.user,
           content: queryString,
+          ai: option,
         });
         return arr;
       });
@@ -38,13 +41,30 @@ export default function Chatbox({ setMessages }: Props) {
     }
   };
 
+  const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setOption(e.target.value);
+  };
+
   return (
-    <div className='flex w-full h-[10vh] mb-4 border-2 border-gray-400 rounded-lg text-white'>
+    <div className='flex w-full rounded-lg text-white'>
+      <select
+        value={option}
+        onChange={handleOptionChange}
+      >
+        {options.map((option) => (
+          <option
+            value={option}
+            key={option}
+          >
+            {option}
+          </option>
+        ))}
+      </select>
       <textarea
         data-id='root'
         placeholder='What do you want to know?'
         rows={2}
-        className='w-full h-full resize-none overflow-hidden bg-transparent p-3
+        className='w-full resize-none overflow-hidden bg-transparent p-3
         text-white'
         onChange={handleChange}
         onKeyDown={handleEnter}

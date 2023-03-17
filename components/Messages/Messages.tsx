@@ -8,23 +8,25 @@ type Props = {
 
 // Store questions and responses
 export default function Querys({ messages }: Props) {
-  const messagesEndRef = useRef<HTMLSpanElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const scrollToBottom = () => {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
+    if (messagesRef.current !== null) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
   }, [messages]);
 
   return (
-    <div className='flex flex-col w-full min-h-[80vh] max-h-[80vh] overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-gray-600 scrollbar-track-gray-400'>
+    <div
+      className='flex flex-col w-full h-[80vh] overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-gray-600 scrollbar-track-gray-400'
+      ref={messagesRef}
+    >
       {messages.map((mess) => (
         <Message
           message={mess}
           key={mess.content}
         />
       ))}
-      <span ref={messagesEndRef} />
     </div>
   );
 }

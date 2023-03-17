@@ -1,31 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Configuration, OpenAIApi } from 'openai';
-import { message } from '../../models/messages';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
-const model = 'gpt-3.5-turbo';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const { messages } = req.body; // complete chat history
+    const { prompt } = req.body;
 
-    const newArr = messages.map(({ ai, ...rest }: message) => rest);
-
-    const chatGPT = await openai
-      .createChatCompletion({
-        model,
-        messages: newArr,
+    const response = await openai
+      .createImage({
+        prompt,
+        n: 1,
+        size: '1024x1024',
       })
       .then((response) => {
-        const chatGPTMessage = response.data.choices[0].message;
-        res.status(200).json(chatGPTMessage);
+        const url = response.data.data[0];
+        res.status(200).json(url);
       })
       .catch((err) => {
         console.error(err);

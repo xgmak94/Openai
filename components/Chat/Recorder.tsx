@@ -70,32 +70,34 @@ export default function AudioRecorder() {
   }, [handleDataAvailable]);
 
   return (
-    <div className='flex w-full justify-center p-1 gap-3 items-center'>
-      {recording ? (
-        <button
-          className='border p-3 rounded-lg hover:bg-slate-800'
-          onClick={handleStopRecording}
-        >
-          Stop Recording
-        </button>
-      ) : (
-        <button
-          className='border p-3 rounded-lg hover:bg-slate-800'
-          onClick={handleStartRecording}
-        >
-          {recording ? 'Recording...' : 'Start Recording'}
-        </button>
-      )}
-      {audioUrl ? (
-        <audio
-          controls
-          src={audioUrl}
-        >
-          Your browser does not support the <code>audio</code> element.
-        </audio>
-      ) : (
-        <div>{text}</div>
-      )}
-    </div>
+    <>
+      <div className='flex w-full max-h-[10vh] min-h-[10vh] justify-center p-1 gap-3 items-center'>
+        {recording ? (
+          <button
+            className='border p-3 rounded-lg hover:bg-slate-800'
+            onClick={handleStopRecording}
+          >
+            Stop Recording
+          </button>
+        ) : (
+          <button
+            className='border p-3 rounded-lg hover:bg-slate-800'
+            onClick={handleStartRecording}
+          >
+            {recording ? 'Recording...' : 'Start Recording'}
+          </button>
+        )}
+        {audioUrl ? (
+          <audio
+            controls
+            src={audioUrl}
+          >
+            Your browser does not support the <code>audio</code> element.
+          </audio>
+        ) : (
+          <div>{text}</div>
+        )}
+      </div>
+    </>
   );
 }
