@@ -4,7 +4,7 @@ type Props = { url: string };
 
 export default function Generatedimage({ url }: Props) {
   return (
-    <div>
+    <div className='w-full h-full'>
       <img
         src={url}
         alt='dalle generated'
