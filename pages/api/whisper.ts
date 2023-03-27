@@ -13,12 +13,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    console.log(req.body);
     const { file } = req.body; // complete chat history
 
-    const whisper = await openai.createTranscription(file, model);
+    // const whisper = await openai.createTranscription(file, model);
 
-    res.status(200).json(req.body);
+    res.status(200).json({ error: 'wip' });
   }
 }
 

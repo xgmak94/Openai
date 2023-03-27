@@ -70,34 +70,38 @@ export default function AudioRecorder() {
   }, [handleDataAvailable]);
 
   return (
-    <>
-      <div className='flex w-full max-h-[10vh] min-h-[10vh] justify-center p-1 gap-3 items-center'>
+    <div className='flex flex-col items-center justify-center border-2 rounded-lg p-4 w-full h-[10vh]'>
+      <div className='flex items-center gap-3'>
         {recording ? (
           <button
-            className='border p-3 rounded-lg hover:bg-slate-800'
+            className='bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 whitespace-normal break-all border-4 border-red-900'
             onClick={handleStopRecording}
           >
             Stop Recording
           </button>
         ) : (
           <button
-            className='border p-3 rounded-lg hover:bg-slate-800'
+            className='bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 whitespace-normal break-all border-4 border-green-900'
             onClick={handleStartRecording}
           >
-            {recording ? 'Recording...' : 'Start Recording'}
+            Start Recording
           </button>
         )}
         {audioUrl ? (
           <audio
             controls
             src={audioUrl}
-          >
-            Your browser does not support the <code>audio</code> element.
-          </audio>
+          />
         ) : (
           <div>{text}</div>
         )}
       </div>
-    </>
+      {/* <div className="flex flex-row gap-3">
+        <div>{'help'}</div>
+        <CopyToClipboard text={'help'}>
+          <button>Copy to clipboard with button</button>
+        </CopyToClipboard>
+      </div> */}
+    </div>
   );
 }

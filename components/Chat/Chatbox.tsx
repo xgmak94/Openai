@@ -4,9 +4,10 @@ import { role, message } from '../../models/messages';
 
 type Props = {
   setMessages: React.Dispatch<React.SetStateAction<message[]>>;
+  loading: boolean;
 };
 
-export default function Chatbox({ setMessages }: Props) {
+export default function Chatbox({ setMessages, loading }: Props) {
   const [queryString, setQueryString] = useState<string>(''); // current query
   const [option, setOption] = useState<string>('ChatGPT'); // selected option
   const options = ['ChatGPT', 'DALL·E'];
@@ -18,13 +19,18 @@ export default function Chatbox({ setMessages }: Props) {
 
   // Handles when the user presses enter inside of the chatbox
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (loading) return; // do not let continue when loading
+
     if (e.altKey === false && e.key === 'Enter') {
       e.preventDefault();
       addQuery();
     }
   };
 
-  const addQuery = () => {
+  const addQuery = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    if (loading) return; // do not let continue when loading
+
     // check query is not empty
     if (queryString) {
       setMessages((prev) => {
@@ -46,10 +52,14 @@ export default function Chatbox({ setMessages }: Props) {
   };
 
   return (
-    <div className='flex w-full rounded-lg text-white'>
+    <form
+      className='flex w-full rounded-lg text-white border-2'
+      onSubmit={addQuery}
+    >
       <select
         value={option}
         onChange={handleOptionChange}
+        className='p-2 rounded-lg bg-gray-700 border-r'
       >
         {options.map((option) => (
           <option
@@ -65,17 +75,19 @@ export default function Chatbox({ setMessages }: Props) {
         placeholder='What do you want to know?'
         rows={2}
         className='w-full resize-none overflow-hidden bg-transparent p-3
-        text-white'
+        text-white border-r border-gray-800'
         onChange={handleChange}
         onKeyDown={handleEnter}
         value={queryString as string}
+        disabled={loading}
       />
-      <div
-        className='flex w-[5vw] items-center justify-center border-l-2 cursor-pointer hover:bg-gray-200 hover:opacity-50'
-        onClick={addQuery}
+      <button
+        className={`flex items-center justify-center px-4 cursor-pointer hover:bg-gray-200 hover:opacity-50
+        ${loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+        type='submit'
       >
         <SendOutlinedIcon className='text-black' />
-      </div>
-    </div>
+      </button>
+    </form>
   );
 }

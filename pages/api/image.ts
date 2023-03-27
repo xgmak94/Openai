@@ -22,7 +22,7 @@ export default async function handler(
       })
       .then((response) => {
         const url = response.data.data[0];
-        res.status(200).json(url);
+        res.status(200).json({ content: url.url, ai: 'DALL·E' });
       })
       .catch((err) => {
         console.error(err);

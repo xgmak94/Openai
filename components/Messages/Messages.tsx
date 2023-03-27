@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Message from './Message';
+import Message from './Message/Message';
 import { type message } from '../../models/messages';
 
 type Props = {
@@ -18,7 +18,7 @@ export default function Querys({ messages }: Props) {
 
   return (
     <div
-      className='flex flex-col w-full h-[80vh] overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-gray-600 scrollbar-track-gray-400'
+      className='flex flex-col w-full h-[80vh] overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-gray-300 scrollbar-track-gray-400 scroll-smooth gap-1 pr-4'
       ref={messagesRef}
     >
       {messages.map((mess) => (

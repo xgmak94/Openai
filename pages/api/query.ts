@@ -25,7 +25,10 @@ export default async function handler(
       })
       .then((response) => {
         const chatGPTMessage = response.data.choices[0].message;
-        res.status(200).json(chatGPTMessage);
+
+        res
+          .status(200)
+          .json({ content: chatGPTMessage?.content, ai: 'ChatGPT' });
       })
       .catch((err) => {
         console.error(err);
